@@ -1,0 +1,107 @@
+server:
+  port: 8080
+
+management:
+  server:
+    port: 8081
+
+database:
+  schema: orders
+  host: localhost
+
+spring:
+  datasource:
+    url: jdbc:postgresql://${database.host}:5432/postgres?currentSchema=${database.schema}
+    username: postgres
+    password: postgres
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  flyway:
+    fail-on-missing-locations: false
+    create-schemas: true
+    schemas: ${database.schema}
+    out-of-order: true
+
+  cloud:
+    openfeign:
+      circuitbreaker:
+        enabled: true
+      client:
+        config:
+          customers:
+            url: http://customers
+            dismiss404: true
+            connect-timeout: 500
+            read-timeout: 2000
+
+  kafka:
+    listener:
+      ack-mode: record
+    properties:
+      schema.registry.url: http://schemaregistry
+      json.fail.invalid.schema: true
+      json.write.dates.iso8601: true
+      json.value.type: com.mycompany.application.event.DomainEvent
+    producer:
+      transaction-id-prefix: orders-tx-
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: io.confluent.kafka.serializers.json.KafkaJsonSchemaSerializer
+    consumer:
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: io.confluent.kafka.serializers.json.KafkaJsonSchemaDeserializer
+      auto-offset-reset: earliest
+
+orders:
+  discount-settings:
+    free-delivery-days:
+      - 2022-02-14
+      - 2022-03-09
+      - 2022-04-01
+      - 2022-05-26
+      - 2022-06-01
+      - 2022-11-11
+      - 2022-12-06
+
+  delivery-cost-settings:
+    default-delivery-cost:
+      value: 20.00
+      currency: USD
+    delivery-cost-levels:
+      - min-price:
+          value: 400.00
+          currency: USD
+        max-weight:
+          value: 2.00
+          unit: KG
+        delivery-cost:
+          value: 0.00
+          currency: USD
+      - min-price:
+          value: 200.00
+          currency: USD
+        max-weight:
+          value: 1.00
+          unit: KG
+        delivery-cost:
+          value: 10.00
+          currency: USD
+      - min-price:
+          value: 100.00
+          currency: USD
+        max-weight:
+          value: 1.00
+          unit: KG
+        delivery-cost:
+          value: 15.00
+          currency: USD
+
+  email-recipients:
+    - test@somemail.com
+
+

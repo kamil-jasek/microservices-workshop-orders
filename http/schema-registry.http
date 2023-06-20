@@ -1,0 +1,5 @@
+###
+GET http://localhost:8085/subjects/
+
+###
+DELETE http://localhost:8085/subjects/warehouse-stock-released-v1-value

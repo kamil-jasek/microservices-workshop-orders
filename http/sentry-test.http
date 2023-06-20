@@ -1,0 +1,5 @@
+###
+POST http://localhost:8092/error
+
+### kube
+POST http://localhost:52314/error
