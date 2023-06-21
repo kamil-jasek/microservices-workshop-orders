@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orders
+  labels:
+    app: orders
+  namespace: microservices-workshop
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: orders
+  template:
+    metadata:
+      labels:
+        app: orders
+      annotations:
+        linkerd.io/inject: enabled
+    spec:
+      serviceAccountName: orders
+      containers:
+        - name: orders
+          imagePullPolicy: Always
+          image: localhost:5000/orders:{{version}}
+          ports:
+            - containerPort: 8080
+            - containerPort: 8081
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: prod,processmanager
+            - name: DATABASE_HOST
+              value: postgres
+            - name: SENTRY_DSN
+              value: https://7d4f5aff7f1640c4be44916981b57fba@o4505347633774592.ingest.sentry.io/4505347635806208
+            - name: SPRING_KAFKA_BOOTSTRAP_SERVERS
+              value: kafka-broker:29092
+          livenessProbe:
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            failureThreshold: 6
+            httpGet:
+              port: 8081
+              path: /actuator/health
+          readinessProbe:
+            initialDelaySeconds: 20
+            periodSeconds: 5
+            failureThreshold: 8
+            httpGet:
+              port: 8081
+              path: /actuator/health

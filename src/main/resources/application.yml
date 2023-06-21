@@ -30,15 +30,15 @@ spring:
 
   cloud:
     openfeign:
-      circuitbreaker:
-        enabled: true
+#      circuitbreaker:
+#        enabled: true
       client:
         config:
           customers:
             url: http://customers
             dismiss404: true
-            connect-timeout: 500
-            read-timeout: 2000
+#            connect-timeout: 500
+#            read-timeout: 2000
 
   kafka:
     listener:
