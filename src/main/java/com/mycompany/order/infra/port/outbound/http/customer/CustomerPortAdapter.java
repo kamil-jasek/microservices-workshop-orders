@@ -10,6 +10,7 @@ final class CustomerPortAdapter implements CustomerPort {
 
     @Override
     public boolean customerExists(CustomerId customerId) {
-        return api.findById(customerId.id()) != null;
+        final var dto = api.findById(customerId.id());
+        return dto != null && dto.id() != null;
     }
 }

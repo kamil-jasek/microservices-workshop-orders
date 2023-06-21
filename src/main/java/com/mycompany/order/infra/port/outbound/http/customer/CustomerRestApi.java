@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.UUID;
 
-@FeignClient(name = "customers"/*, configuration = CustomerRestApiConfig.class*/)
+@FeignClient(name = "customers", fallback = FallbackCustomerRestApi.class/*, configuration = CustomerRestApiConfig.class*/)
 interface CustomerRestApi {
 
     record CustomerDto(UUID id) {

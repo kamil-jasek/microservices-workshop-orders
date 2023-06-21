@@ -17,4 +17,4 @@ spring:
       client:
         config:
           customers:
-            url: http://localhost:8094/api
+            url: http://localhost:8094

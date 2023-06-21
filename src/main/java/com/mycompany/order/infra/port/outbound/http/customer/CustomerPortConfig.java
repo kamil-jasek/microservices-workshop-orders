@@ -12,4 +12,9 @@ class CustomerPortConfig {
     CustomerPort customerPort(CustomerRestApi api) {
         return new CustomerPortAdapter(api);
     }
+
+    @Bean
+    FallbackCustomerRestApi fallbackCustomerRestApi() {
+        return new FallbackCustomerRestApi();
+    }
 }

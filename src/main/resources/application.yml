@@ -57,6 +57,13 @@ spring:
       value-deserializer: io.confluent.kafka.serializers.json.KafkaJsonSchemaDeserializer
       auto-offset-reset: earliest
 
+resilience4j:
+  circuitbreaker:
+    instances:
+      customers_findById:
+        failure-rate-threshold: 20
+        minimum-number-of-calls: 5
+
 orders:
   discount-settings:
     free-delivery-days:
@@ -103,5 +110,6 @@ orders:
 
   email-recipients:
     - test@somemail.com
+
 
 
