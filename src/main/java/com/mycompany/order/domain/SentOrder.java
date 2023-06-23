@@ -13,8 +13,11 @@ import java.time.Instant;
 public final class SentOrder extends Order {
 
     private final Instant sentTime;
+    private final ShipmentId shipmentId;
 
-    public SentOrder(@NonNull AcceptedOrder order, @NonNull Instant sentTime) {
+    public SentOrder(@NonNull AcceptedOrder order,
+                     @NonNull Instant sentTime,
+                     @NonNull ShipmentId shipmentId) {
         super(order.id(),
             order.createTime(),
             OrderStatus.SENT,
@@ -23,5 +26,6 @@ public final class SentOrder extends Order {
             order.discount(),
             order.deliveryCost());
         this.sentTime = sentTime;
+        this.shipmentId = shipmentId;
     }
 }

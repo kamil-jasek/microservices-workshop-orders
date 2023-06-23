@@ -1,8 +1,6 @@
 package com.mycompany.order.infra.port.outbound.repo;
 
 import com.mycompany.order.domain.*;
-import com.mycompany.order.infra.port.outbound.repo.JpaOrderRepoConfig;
-import com.mycompany.order.infra.port.outbound.repo.JpaOrderRepoPortAdapter;
 import com.mycompany.test.container.WithPostgres;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +9,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ContextConfiguration;
 
 import java.time.Instant;
+import java.util.UUID;
 
 import static com.mycompany.order.domain.Currency.*;
 import static com.mycompany.order.domain.WeightUnit.KG;
@@ -92,7 +91,8 @@ class JpaOrderRepoPortAdapterTest implements WithPostgres {
                 )),
             Price.of("20.00", USD),
             Price.of("91.15", USD)),
-            Instant.parse("2022-02-21T10:00:01Z"));
+            Instant.parse("2022-02-21T10:00:01Z"),
+            new ShipmentId(UUID.fromString("1ecf4ed7-f604-4fa9-9631-d46abcd96f7c")));
 
         // expect order is saved without exceptions
         repoPort.save(order);

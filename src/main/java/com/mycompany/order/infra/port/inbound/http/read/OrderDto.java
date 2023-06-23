@@ -34,6 +34,7 @@ final class OrderDto implements HateoasResource {
     private BigDecimal discount;
     private BigDecimal deliveryCost;
     private Instant sentTime;
+    private UUID shipmentId;
     private Instant cancelTime;
     private String cancelReason;
 

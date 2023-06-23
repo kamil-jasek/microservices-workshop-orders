@@ -4,6 +4,7 @@ import com.mycompany.application.command.CommandDispatcher;
 import com.mycompany.order.command.CancelOrderCmd;
 import com.mycompany.order.command.SendOrderCmd;
 import com.mycompany.order.domain.OrderId;
+import com.mycompany.order.domain.ShipmentId;
 import jakarta.validation.Valid;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -32,8 +33,11 @@ final class WriteOrderRestEndpoint {
     }
 
     @PutMapping("/{id}/send")
-    OrderSentDto sendOrder(@PathVariable UUID id) {
-        final var confirmation = dispatcher.dispatch(new SendOrderCmd(new OrderId(id)));
+    OrderSentDto sendOrder(@PathVariable UUID id,
+                           @RequestBody @Valid SendOrderRequest request) {
+        final var confirmation = dispatcher.dispatch(new SendOrderCmd(
+            new OrderId(id),
+            new ShipmentId(request.shipmentId())));
         return new OrderSentDto(confirmation.orderId().id(), confirmation.sentAt());
     }
 

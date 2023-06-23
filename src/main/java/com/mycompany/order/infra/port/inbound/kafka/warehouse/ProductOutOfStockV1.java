@@ -20,6 +20,6 @@ final class ProductOutOfStockV1 extends DomainEvent<ProductOutOfStockData> {
         super(eventId, eventTime, correlationId, data);
     }
 
-    record ProductOutOfStockData(UUID orderId, UUID productId) implements DomainEventData {
+    record ProductOutOfStockData(UUID waybillId, UUID productId) implements DomainEventData {
     }
 }

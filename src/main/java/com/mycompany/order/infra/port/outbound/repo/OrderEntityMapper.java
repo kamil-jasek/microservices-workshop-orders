@@ -21,6 +21,7 @@ final class OrderEntityMapper {
             order.deliveryCost().value(),
             null,
             null,
+            null,
             null);
     }
 
@@ -35,6 +36,7 @@ final class OrderEntityMapper {
             order.discount().value(),
             order.deliveryCost().value(),
             order.sentTime(),
+            order.shipmentId().id(),
             null,
             null);
     }
@@ -49,6 +51,7 @@ final class OrderEntityMapper {
             mapOrderItemsToEntities(order),
             order.discount().value(),
             order.deliveryCost().value(),
+            null,
             null,
             order.cancelTime(),
             order.reason());
@@ -98,7 +101,7 @@ final class OrderEntityMapper {
     }
 
     private Order toSentOrder(OrderEntity entity) {
-        return new SentOrder(toAcceptedOrder(entity), entity.sentTime());
+        return new SentOrder(toAcceptedOrder(entity), entity.sentTime(), new ShipmentId(entity.shipmentId()));
     }
 
     private Order toCanceledOrder(OrderEntity entity) {

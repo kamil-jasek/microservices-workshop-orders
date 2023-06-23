@@ -1,0 +1,18 @@
+version: '3.1'
+
+services:
+  orders:
+    build: .
+    image: localhost:5000/orders
+    ports:
+      - "8092:8092"
+    depends_on:
+      - postgres
+      - kafka-broker
+      - wiremock
+    environment:
+      SPRING_PROFILES_ACTIVE: local
+      DATABASE_HOST: postgres
+#      SENTRY_DSN: https://7d4f5aff7f1640c4be44916981b57fba@o4505347633774592.ingest.sentry.io/4505347635806208
+      SPRING_CLOUD_OPENFEIGN_CLIENT_CONFIG_CUSTOMERS_URL: http://wiremock:8080
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka-broker:29092

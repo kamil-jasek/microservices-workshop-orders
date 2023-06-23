@@ -4,6 +4,7 @@ import com.mycompany.application.command.CommandDispatcher;
 import com.mycompany.order.command.CancelOrderCmd;
 import com.mycompany.order.command.SendOrderCmd;
 import com.mycompany.order.domain.OrderId;
+import com.mycompany.order.domain.ShipmentId;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -21,7 +22,9 @@ final class KafkaWarehouseListener {
         containerFactory = "domainEventKafkaContainerFactory"
     )
     void handleStockReleased(StockReleasedV1 event) {
-        commandDispatcher.dispatch(new SendOrderCmd(new OrderId(event.data().orderId())));
+        commandDispatcher.dispatch(new SendOrderCmd(
+            new OrderId(event.data().waybillId()),
+            new ShipmentId(event.data().shipmentId())));
     }
 
     @SneakyThrows
@@ -32,7 +35,7 @@ final class KafkaWarehouseListener {
     )
     void handleProductOutOfStock(ProductOutOfStockV1 event) {
         commandDispatcher.dispatch(new CancelOrderCmd(
-            new OrderId(event.data().orderId()),
+            new OrderId(event.data().waybillId()),
             "product out of stock: " + event.data().productId()));
     }
 }

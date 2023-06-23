@@ -20,6 +20,6 @@ final class StockReleasedV1 extends DomainEvent<StockReleased> {
         super(eventId, eventTime, correlationId, data);
     }
 
-    record StockReleased(UUID waybillId, UUID orderId) implements DomainEventData {
+    record StockReleased(UUID waybillId, UUID shipmentId) implements DomainEventData {
     }
 }

@@ -27,7 +27,7 @@ class SendOrderHandler extends CommandHandler<SendOrderCmd, OrderSentConfirmatio
     @Override
     public OrderSentConfirmation handle(SendOrderCmd cmd) {
         final var acceptedOrder = repoPort.getOrderAs(cmd.orderId(), AcceptedOrder.class);
-        final var sentOrder = acceptedOrder.sentAt(clock.instant());
+        final var sentOrder = acceptedOrder.sentAt(clock.instant(), cmd.shipmentId());
         repoPort.save(sentOrder);
         eventPublisher.publish(new OrderSentV1(
             randomUUID(),

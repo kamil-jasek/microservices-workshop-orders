@@ -8,6 +8,7 @@ create table orders
     discount      money                    not null,
     delivery_cost money                    not null,
     sent_time     timestamp with time zone,
+    shipment_id   uuid,
     cancel_time   timestamp with time zone,
     cancel_reason text
 );

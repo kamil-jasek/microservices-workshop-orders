@@ -23,8 +23,8 @@ public final class AcceptedOrder extends Order {
         super(orderId, createTime, ACCEPTED, customerId, orderItems, discount, deliveryCost);
     }
 
-    public SentOrder sentAt(Instant sentTime) {
-        return new SentOrder(this, sentTime);
+    public SentOrder sentAt(Instant sentTime, ShipmentId shipmentId) {
+        return new SentOrder(this, sentTime, shipmentId);
     }
 
     public CanceledOrder cancel(Instant cancelTime, String reason) {
