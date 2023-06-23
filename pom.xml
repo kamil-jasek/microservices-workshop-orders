@@ -10,7 +10,7 @@
 
     <groupId>com.mycompany</groupId>
     <artifactId>orders</artifactId>
-    <version>0.0.13-SNAPSHOT</version>
+    <version>0.0.15-SNAPSHOT</version>
     <name>orders</name>
     <description>Demo project for Microservice Workshop</description>
 
