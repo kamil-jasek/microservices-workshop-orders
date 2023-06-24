@@ -1,0 +1,61 @@
+curl -X POST --location "http://localhost:8092/v1/orders" \
+    -H "Content-Type: application/json" \
+    -d "{
+          \"customerId\": \"a13dfdb8-6e30-4d31-99e4-62c3a308e310\",
+          \"orderCurrency\": \"USD\",
+          \"orderItems\": [
+            {
+              \"productId\": \"c58b7367-207a-471c-b000-13f67f20c9ca\",
+              \"price\": {
+                \"value\": \"24.12\",
+                \"currency\": \"EUR\"
+              },
+              \"weight\": {
+                \"value\": 0.12,
+                \"unit\": \"KG\"
+              },
+              \"quantity\": 2
+            }
+          ],
+          \"discountCoupon\": \"ABC20\"
+        }"
+
+
+curl -X POST --location "http://localhost:8092/v1/orders" \
+    -H "Content-Type: application/json" \
+    -d "{
+          \"customerId\": \"a13dfdb8-6e30-4d31-99e4-62c3a308e310\",
+          \"orderCurrency\": \"USD\",
+          \"orderItems\": [
+            {
+              \"productId\": \"3b1ad028-d67b-4ea4-a7eb-c51b268b277e\",
+              \"price\": {
+                \"value\": \"24.12\",
+                \"currency\": \"EUR\"
+              },
+              \"weight\": {
+                \"value\": 0.12,
+                \"unit\": \"KG\"
+              },
+              \"quantity\": 2
+            }
+          ],
+          \"discountCoupon\": \"ABC20\"
+        }"
+
+
+curl -X GET --location "http://localhost:8092/v1/orders"
+
+curl -X GET --location "http://localhost:8092/v1/orders?customerId=a13dfdb8-6e30-4d31-99e4-62c3a308e310"
+
+curl -X GET --location "http://localhost:8092/v1/orders/6c687337-603e-460e-b8d5-a8029503951d"
+
+curl -X GET --location "http://localhost:8092/v1/orders/b07bf88c-8fe0-4e9f-b6e4-3001142d6d1c/items"
+
+curl -X PUT --location "http://localhost:8092/v1/orders/dd00722c-0714-4d4e-92ae-9f379bac6cd4/send"
+
+curl -X PUT --location "http://localhost:8092/v1/orders/0378904a-783f-44e0-ad58-5871e1999340/cancel" \
+    -H "Content-Type: application/json" \
+    -d "{
+          \"reason\": \"customer disposition\"
+        }"
